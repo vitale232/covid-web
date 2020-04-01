@@ -1,0 +1,13 @@
+{
+    "python.pythonPath": "covid-web-env/bin/python3.8",
+    "cSpell.words": [
+        "dtype",
+        "dtypes",
+        "fips",
+        "iloc",
+        "isin",
+        "itertuples",
+        "objectid",
+        "strftime"
+    ]
+}

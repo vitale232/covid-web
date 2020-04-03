@@ -81,6 +81,191 @@ The published data is available at two separate URLs, and should be updated dail
 
 The majority of the project currently lives in the `./source/backend` directory. There is a script called `publish_peese_geojson.py`. If called using the Python 3.8 virtualenv that can be replicated using the `requirements.txt` file in this repository, it will reformat the PEESE data, merge it with the spatial census data, and publish it to S3. The AWS portion of the script uses `boto3`. See the [docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html) to decide how you'd like to configure your credentials for your AWS account.
 
+## Example JSON Response
+
+Here are some samples to show the basic structure of the JSON response. They are technically FeatureCollections that contain MultiPolygon features, which follow the [GeoJSON specification](https://geojson.org/). The types can be inferred from the samples on the `properties`.
+
+## Slim Version
+
+```json
+{
+    "type": "FeatureCollection",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        ...,
+        {
+            "type": "Feature",
+            "properties": {
+                "date": 1583064000000,
+                "cases": 0,
+                "new_cases": 0,
+                "name": "New York City",
+                "state_name": "New York",
+                "fips": "-9999",
+                "population": 8679919,
+                "males": 3882544,
+                "females": 4292589,
+                "pop2010": 8175133
+            },
+            "geometry": {
+                "type": "MultiPolygon",
+                "coordinates": [
+                    [
+                        [
+                            [
+                                -74.236939682477441,
+                                40.506003322552658
+                            ],
+                            ...,
+                            [
+                                -73.846060798530061,
+                                40.652600102974191
+                            ]
+                        ]
+                    ],
+                    [
+                        [
+                            [
+                                -73.977061092200756,
+                                40.797487091072867
+                            ],
+                            ...,
+                            [
+                                -73.977061092200756,
+                                40.797487091072867
+                            ]
+                        ]
+                    ]
+                ]
+            }
+        },
+        ...,
+       {
+            "type": "Feature",
+            "properties": {
+                "date": 1585915200000,
+                "cases": 57159,
+                "new_cases": 5350,
+                "name": "New York City",
+                "state_name": "New York",
+                "fips": "-9999",
+                "population": 8679919,
+                "males": 3882544,
+                "females": 4292589,
+                "pop2010": 8175133
+            },
+            "geometry": {
+                "type": "MultiPolygon",
+                "coordinates": [
+                    ...
+                ]
+        }
+    ]
+}
+```
+
+### All Census Data
+
+```json
+{
+    "type": "FeatureCollection",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "objectid": 1829,
+                "name": "Albany",
+                "state_name": "New York",
+                "state_fips": "36",
+                "cnty_fips": "001",
+                "fips": "36001",
+                "population": 317479,
+                "pop_sqmi": 595.5,
+                "pop2010": 304204,
+                "pop10_sqmi": 570.6,
+                "white": 237873,
+                "black": 38609,
+                "ameri_es": 654,
+                "asian": 14579,
+                "hawn_pi": 98,
+                "hispanic": 14917,
+                "other": 4744,
+                "mult_race": 7647,
+                "males": 147076,
+                "females": 157128,
+                "age_under5": 15286,
+                "age_5_9": 16131,
+                "age_10_14": 17639,
+                "age_15_19": 23752,
+                "age_20_24": 28017,
+                "age_25_34": 39522,
+                "age_35_44": 37218,
+                "age_45_54": 45425,
+                "age_55_64": 38900,
+                "age_65_74": 20644,
+                "age_75_84": 14570,
+                "age_85_up": 7100,
+                "med_age": 38.4,
+                "med_age_m": 36.7,
+                "med_age_f": 40.0,
+                "households": 126251,
+                "ave_hh_sz": 2.27,
+                "hsehld_1_m": 18848,
+                "hsehld_1_f": 23879,
+                "marhh_chd": 20699,
+                "marhh_no_c": 29943,
+                "mhh_child": 2826,
+                "fhh_child": 9834,
+                "families": 71364,
+                "ave_fam_sz": 2.95,
+                "hse_units": 137739,
+                "vacant": 11488,
+                "owner_occ": 72577,
+                "renter_occ": 53674,
+                "no_farms17": 440.0,
+                "ave_size17": 135.0,
+                "crop_acr17": 34535.0,
+                "ave_sale17": 107565.0,
+                "sqmi": 533.16,
+                "shape_length": 1.6997230927008167,
+                "shape_area": 0.15090687684789317,
+                "nyc": false,
+                "date": 1583064000000,
+                "region": "albany",
+                "cases": 0,
+                "new_cases": 0
+            },
+            "geometry": {
+                "type": "MultiPolygon",
+                "coordinates": [
+                    [
+                        [
+                            [
+                                -73.779528093580041,
+                                42.460290922360059
+                            ],
+                            ...
+                        ]
+                    ]
+                ]
+            },
+            ...
+        },
+    ]
+}
+```
+
 ## Future Work
 
 We would also like to publish the NYT data from the [NYT GitHub](https://github.com/nytimes/covid-19-data). The work is almost complete here, but needs additional work surrounding their handling of the Kansas City metro area and surrounding counties.

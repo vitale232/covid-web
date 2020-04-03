@@ -3,6 +3,7 @@
     "python.autoComplete.extraPaths": ["source/backend"],
     "cSpell.words": [
         "allegany",
+        "astype",
         "botocore",
         "broome",
         "cattaraugus",
@@ -12,6 +13,7 @@
         "dataset",
         "dtype",
         "dtypes",
+        "fillna",
         "fips",
         "geo",
         "geospatial",

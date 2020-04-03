@@ -1,13 +1,33 @@
 {
     "python.pythonPath": "covid-web-env/bin/python3.8",
+    "python.autoComplete.extraPaths": ["source/backend"],
     "cSpell.words": [
+        "allegany",
+        "botocore",
+        "broome",
+        "cattaraugus",
+        "chenango",
+        "covid",
+        "data",
+        "dataset",
         "dtype",
         "dtypes",
         "fips",
+        "geo",
+        "geospatial",
+        "herkimer",
         "iloc",
         "isin",
         "itertuples",
+        "jsons",
+        "melt",
         "objectid",
-        "strftime"
+        "otsego",
+        "peese",
+        "rensselaer",
+        "repuatable",
+        "schoharie",
+        "strftime",
+        "tioga"
     ]
 }

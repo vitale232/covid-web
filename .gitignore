@@ -2,3 +2,7 @@
 .Python
 *.pyc
 covid-web-env/
+data/USA_Counties/*
+data/us-counties-cases.csv
+__pycache__
+dist/*

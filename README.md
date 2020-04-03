@@ -6,11 +6,21 @@
 
 The core of this project can be tested by running some simple commands. This has only been tested on Ubuntu 18.04.
 
+Start by cloning the repository:
+
+```bash
+git clone https://github.com/vitale232/covid-web.git
+```
+
+Then set up the Python environment (py3.8 is suggested, but this will probably work on other py3 versions):
+
 ```bash
 python3.8 -m venv covid-web-env
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+If you have never used AWS `boto3` on your machine, you may need to [configure your credentials](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html).
 
 Then there is a python script that will create and publish the data:
 
@@ -18,15 +28,17 @@ Then there is a python script that will create and publish the data:
 python source/backend/publish_peese_geojson.py
 ```
 
+The script will create a folder: `dist/peese`, which will contain local copies of the data that's uploaded to AWS S3.
+
 ## Data 
 
-Currently the data is available as a public object on AWS S3. The first dataset that is available is from the PEESE Group, a lab at Cornell University. They have New York State COVID-19 cases by county available for public access on their [GitHub page](https://github.com/PEESEgroup/PEESE-COVID19). The PEESE cases data is merged with US Census Bureau data, distributed by Esri, which is available on the [Esri site](https://www.arcgis.com/home/item.html?id=a00d6b6149b34ed3b833e10fb72ef47b).
+Currently the data is available as a public object on AWS S3. The first dataset that is available is from the [PEESE Group](https://www.peese.org/), a lab at Cornell University. They have New York State COVID-19 cases by county available for public access on their [GitHub page](https://github.com/PEESEgroup/PEESE-COVID19). The PEESE cases data is merged with US Census Bureau data, distributed by Esri, which is available on the [Esri site](https://www.arcgis.com/home/item.html?id=a00d6b6149b34ed3b833e10fb72ef47b).
 
 The Census data contains population estimates for 2018. The data is merged with the COVID cases based on the county name and FIPS code. In their final format, there are two separate GeoJSON layers available in two separate formats. The two formats include a raw JSON and a gzip encoded JSON.
 
 ### Full Census Data and COVID-19 Cases
 
-The Census data from Esri that is combined with the PEESE COVID-19 data contains numerous attributes, to many to list here. You can examine the GIS census data from the source download at Esri's site, or you can examine the GeoJSON formatted version that is ingested by these tools. The GeoJSON formatted version is available in if you clone this repo at `./data/usa_counties.geojson`. You can view this file easily with a Desktop GIS tool like the cross-platform, open source [QGIS](https://qgis.org/en/site/).
+The Census data from Esri that is combined with the PEESE COVID-19 data contains numerous attributes, too many to list here. You can examine the GIS census data from the source download at Esri's site, or you can examine the GeoJSON formatted version that is ingested by these tools. The GeoJSON formatted version is available if you clone this repository at `./data/usa_counties.geojson`. You can view this file easily with a Desktop GIS tool like the cross-platform, open source [QGIS](https://qgis.org/en/site/).
 
 The published data is available at two separate URLs, and should be updated daily to include the latest updates (time TBD):
 
@@ -35,7 +47,9 @@ The published data is available at two separate URLs, and should be updated dail
 | ./dist/peese/peese-latest.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson |
 | ./dist/peese/peese-latest.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson.gz | 
 
-The data is formatted such that each individual record is a feature in a GeoJSON feature collection. The geometry of the features are MultiPolygon features, and the properties of each feature include the date of the case count, all of the census data, and all of the census data. This data structure is anything but efficient, and we're open to suggestions.
+The data is formatted such that each individual record is a feature in a GeoJSON feature collection. The geometry of the features are MultiPolygon features, and the properties of each feature include the date of the case count, the case count, and all of the census data. This data structure is anything but efficient, and we're open to suggestions.
+
+*NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
 
 ### Slim Census Data and COVID-19 Cases
 
@@ -46,12 +60,15 @@ To that end, a "slim" version of the PEESE COVID/Census data will be available i
 - **geometry**: feature geometry
 - **date**: date of case count
 - **cases**: number of cases
+- **new_cases**: number of new cases on the `date`
 - **name**: county name
 - **state_name**: name of US state
 - **fips**: fips code
 - **population**: 2018 Census estimated pop
 - **males**: 2018 census estimated male pop
 - **females**: 2018 Census estimated female pop
+
+*NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
 
 The published data is available at two separate URLs, and should be updated daily to include the latest updates (time TBD):
 

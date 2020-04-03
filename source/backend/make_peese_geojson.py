@@ -43,6 +43,17 @@ def prep_peese_csv(csv_url, county_fips):
     # Coerce to Pandas datetime and add 12 hours to account for local time adjustments in JS (esri in particular)
     df = df.assign(date=lambda x: pd.to_datetime(x['date']))
     df = df.assign(date=lambda x: df.date + timedelta(hours=12))
+
+    # Calculate new daily cases
+    df = df.sort_values(['region', 'date'])
+    df = df.set_index(['date', 'region', 'fips'])
+    df = df.assign(new_cases=df.cases.diff().fillna(0).astype(int))
+    df = df.reset_index()
+    df.loc[df.new_cases <0, 'new_cases'] = 0
+
+    df.to_csv('/home/vitale232/Desktop/covid.csv')
+
+
     print(' success')
     return df
 

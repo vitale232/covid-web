@@ -31,7 +31,7 @@ python source/backend/publish_peese_geojson.py
 
 The script will create a folder: `dist/peese`, which will contain local copies of the data that's uploaded to AWS S3.
 
-To schedule this script in the Linux crontab, you can use something like the following command, which schedules script execution every day at 4 AM in the operating system's time zone every day:
+To schedule this script in the Linux crontab, you can use something like the following command, which schedules script execution every day at 4 AM in the operating system's time zone:
 
 ```bash
 00 04 * * * ~/covid-web/covid-web-env/bin/python ~/covid-web/source/backend/publish_peese_geojson.py >> ~/covid-web/logs/log_$(date +'\%Y-\%m-\%d_\%H\%M\%S') 2>&1

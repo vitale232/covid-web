@@ -50,6 +50,7 @@ The published data is available at two separate URLs, and should be updated dail
 The data is formatted such that each individual record is a feature in a GeoJSON feature collection. The geometry of the features are MultiPolygon features, and the properties of each feature include the date of the case count, the case count, and all of the census data. This data structure is anything but efficient, and we're open to suggestions.
 
 *NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
+*NOTE: the `cases_per_100k` field is calculated by this toolset. It is not reported by PEESE.*
 
 ### Slim Census Data and COVID-19 Cases
 
@@ -61,6 +62,7 @@ To that end, a "slim" version of the PEESE COVID/Census data will be available i
 - **date**: date of case count
 - **cases**: number of cases
 - **new_cases**: number of new cases on the `date`
+- **cases_per_100k**: cases normalized to 2018 population: (cases/population) * 100000
 - **name**: county name
 - **state_name**: name of US state
 - **fips**: fips code
@@ -69,6 +71,7 @@ To that end, a "slim" version of the PEESE COVID/Census data will be available i
 - **females**: 2018 Census estimated female pop
 
 *NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
+*NOTE: the `cases_per_100k` field is calculated by this toolset. It is not reported by PEESE.*
 
 The published data is available at two separate URLs, and should be updated daily to include the latest updates (time TBD):
 
@@ -104,6 +107,7 @@ Here are some samples to show the basic structure of the JSON response. They are
                 "date": 1583064000000,
                 "cases": 0,
                 "new_cases": 0,
+                "cases_per_100k": 0.000,
                 "name": "New York City",
                 "state_name": "New York",
                 "fips": "-9999",
@@ -151,6 +155,7 @@ Here are some samples to show the basic structure of the JSON response. They are
                 "date": 1585915200000,
                 "cases": 57159,
                 "new_cases": 5350,
+                "cases_per_100k": 658.520,
                 "name": "New York City",
                 "state_name": "New York",
                 "fips": "-9999",
@@ -244,7 +249,8 @@ Here are some samples to show the basic structure of the JSON response. They are
                 "date": 1583064000000,
                 "region": "albany",
                 "cases": 0,
-                "new_cases": 0
+                "new_cases": 0,
+                "cases_per_100k": 0.000,
             },
             "geometry": {
                 "type": "MultiPolygon",

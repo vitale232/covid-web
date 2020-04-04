@@ -104,6 +104,10 @@ def merge_peese_with_census(cases_df, counties_geojson, output_geojson, slim_out
     county_cases = counties_nyc.merge(cases_df, how='outer', on='fips')
     print(' success')
 
+    print(f'\nCreating field for # Cases normalized by population')
+    # Calculate cases per 100k people
+    county_cases['cases_per_100k'] = ((county_cases.cases/county_cases.population) * 100000).apply(lambda x: round(x, 3))
+
     print(f'\nWriting PEESE GIS data to GeoJSON:\n {output_geojson}')
     county_cases = county_cases.assign(date=(
         (county_cases.date - datetime(1970, 1, 1)).dt.total_seconds() * 1000).apply(int)

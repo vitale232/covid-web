@@ -81,6 +81,7 @@ peese_slim_fields = [  # Keep select fields for a "slim" geojson that will resul
     'date',
     'cases',
     'new_cases',
+    'cases_per_100k',
     'name',
     'state_name',
     'fips',

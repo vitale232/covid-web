@@ -51,9 +51,6 @@ def prep_peese_csv(csv_url, county_fips):
     df = df.reset_index()
     df.loc[df.new_cases <0, 'new_cases'] = 0
 
-    df.to_csv('/home/vitale232/Desktop/covid.csv')
-
-
     print(' success')
     return df
 

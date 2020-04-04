@@ -31,6 +31,12 @@ python source/backend/publish_peese_geojson.py
 
 The script will create a folder: `dist/peese`, which will contain local copies of the data that's uploaded to AWS S3.
 
+To schedule this script in the Linux crontab, you can use something like the following command, which schedules script execution every day at 4 AM in the operating system's time zone every day:
+
+```bash
+00 04 * * * ~/covid-web/covid-web-env/bin/python ~/covid-web/source/backend/publish_peese_geojson.py >> ~/covid-web/logs/log_$(date +'\%Y-\%m-\%d_\%H\%M\%S') 2>&1
+```
+
 ## Data 
 
 Currently the data is available as a public object on AWS S3. The first dataset that is available is from the [PEESE Group](https://www.peese.org/), a lab at Cornell University. They have New York State COVID-19 cases by county available for public access on their [GitHub page](https://github.com/PEESEgroup/PEESE-COVID19). The PEESE cases data is merged with US Census Bureau data, distributed by Esri, which is available on the [Esri site](https://www.arcgis.com/home/item.html?id=a00d6b6149b34ed3b833e10fb72ef47b).
@@ -41,7 +47,7 @@ The Census data contains population estimates for 2018. The data is merged with 
 
 The Census data from Esri that is combined with the PEESE COVID-19 data contains numerous attributes, too many to list here. You can examine the GIS census data from the source download at Esri's site, or you can examine the GeoJSON formatted version that is ingested by these tools. The GeoJSON formatted version is available if you clone this repository at `./data/usa_counties.geojson`. You can view this file easily with a Desktop GIS tool like the cross-platform, open source [QGIS](https://qgis.org/en/site/).
 
-The published data is available at two separate URLs, and should be updated daily to include the latest updates (time TBD):
+The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 UTC, midnight EDT):
 
 |     File                             |                           URL                                |
 |--------------------------------------|--------------------------------------------------------------|
@@ -74,7 +80,7 @@ To that end, a "slim" version of the PEESE COVID/Census data will be available i
 *NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
 *NOTE: the `cases_per_100k` field is calculated by this toolset. It is not reported by PEESE.*
 
-The published data is available at two separate URLs, and should be updated daily to include the latest updates (time TBD):
+The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 UTC, midnight EDT):
 
 |     File                             |                           URL                                |
 |--------------------------------------|--------------------------------------------------------------|

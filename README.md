@@ -16,6 +16,7 @@ Then set up the Python environment (py3.8 is suggested, but this will probably w
 
 ```bash
 python3.8 -m venv covid-web-env
+source covid-web-env/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```

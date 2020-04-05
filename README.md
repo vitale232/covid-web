@@ -49,15 +49,16 @@ The Census data from Esri that is combined with the PEESE COVID-19 data contains
 
 The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 UTC, midnight EDT):
 
-|     File                             |                           URL                                |
-|--------------------------------------|--------------------------------------------------------------|
-| ./dist/peese/peese-latest.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson |
-| ./dist/peese/peese-latest.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson.gz | 
+|     File                             |                           URL                                     |     Size    |
+|--------------------------------------|-------------------------------------------------------------------|-------------|
+| ./dist/peese/peese-latest.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson    |  4,700.0 KB |
+| ./dist/peese/peese-latest.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson.gz |     94.3 KB |
 
 The data is formatted such that each individual record is a feature in a GeoJSON feature collection. The geometry of the features are MultiPolygon features, and the properties of each feature include the date of the case count, the case count, and all of the census data. This data structure is anything but efficient, and we're open to suggestions.
 
 *NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
 *NOTE: the `cases_per_100k` field is calculated by this toolset. It is not reported by PEESE.*
+*NOTE: size of files will increase as more days accumulate. Updated 4.5.2020*
 
 ### Slim Census Data and COVID-19 Cases
 
@@ -82,10 +83,12 @@ To that end, a "slim" version of the PEESE COVID/Census data will be available i
 
 The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 UTC, midnight EDT):
 
-|     File                             |                           URL                                |
-|--------------------------------------|--------------------------------------------------------------|
-| ./dist/peese/peese-latest-slim.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest-slim.geojson |
-| ./dist/peese/peese-latest-slim.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest-slim.geojson.gz | 
+|     File                             |                           URL                                               | Size |
+|--------------------------------------|-----------------------------------------------------------------------------|------------|
+| ./dist/peese/peese-latest-slim.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest-slim.geojson    | 2,800.0 KB |
+| ./dist/peese/peese-latest-slim.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest-slim.geojson.gz |    65.4 KB |
+
+*NOTE: size of files will increase as more days accumulate. Updated 4.5.2020*
 
 ## Project Organization
 

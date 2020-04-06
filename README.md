@@ -2,6 +2,9 @@
 
 `covid-web` is a project aimed at making geospatial COVID-19 data from repuatable sources freely available to whoever needs it. The aim is to publish the data to the AWS Cloud, where it can be ingested by client-side applications in the GeoJSON format. There is a lot of room to grow here, so feel free to contribute.
 
+- Example map of cases can be viewed here: https://esri-play-peese-data.stackblitz.io/
+- And an example map of **cases normalized by population** can be viewed here: https://esri-play-peese-data-nmlzd-pop.stackblitz.io/
+
 #### Quick Start
 
 The core of this project can be tested by running some simple commands. This has only been tested on Ubuntu 18.04.

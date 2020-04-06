@@ -47,7 +47,7 @@ The Census data contains population estimates for 2018. The data is merged with 
 
 The Census data from Esri that is combined with the PEESE COVID-19 data contains numerous attributes, too many to list here. You can examine the GIS census data from the source download at Esri's site, or you can examine the GeoJSON formatted version that is ingested by these tools. The GeoJSON formatted version is available if you clone this repository at `./data/usa_counties.geojson`. You can view this file easily with a Desktop GIS tool like the cross-platform, open source [QGIS](https://qgis.org/en/site/).
 
-The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 UTC, midnight EDT):
+The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 and 1600 UTC, midnight and noon EDT):
 
 |     File                             |                           URL                                     |     Size    |
 |--------------------------------------|-------------------------------------------------------------------|-------------|
@@ -81,7 +81,7 @@ To that end, a "slim" version of the PEESE COVID/Census data will be available i
 *NOTE: the `new_cases` field is calculated by this toolset. It is not reported by PEESE.*
 *NOTE: the `cases_per_100k` field is calculated by this toolset. It is not reported by PEESE.*
 
-The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 UTC, midnight EDT):
+The published data is available at two separate URLs, and should be updated daily to include the latest updates (updates at 0400 and 1600 UTC, midnight and noon EDT):
 
 |     File                             |                           URL                                               | Size |
 |--------------------------------------|-----------------------------------------------------------------------------|------------|

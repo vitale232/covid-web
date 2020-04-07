@@ -28,14 +28,7 @@ def prep_peese_csv(csv_url, county_fips):
 
     # Make long formatted table and add FIPS column
     print(f'\nCreating NYC region and melting CSV to long format')
-    df['fips'] = df['region'].map(constants.county_fips)
-
-    # NYC is not reporting to the county level. Replace the NYC counties with
-    # a new region called 'new york city', add a no data value to fips, and
-    # sum up the cases across the NYC counties
-    df.loc[df.fips.isin(constants.nyc_counties_fips), 'region'] = 'new york city'
-    df.loc[df.region == 'new york city', 'fips'] = constants.nyc_fake_fips
-    df = df.groupby(['region', 'fips']).sum().reset_index()
+    df['fips'] = df['region'].map(constants.county_fips).astype(str)
 
     # Long format the data frame
     df = pd.melt(df, id_vars=['region', 'fips'], var_name='date', value_name='cases')
@@ -78,27 +71,8 @@ def merge_peese_with_census(cases_df, counties_geojson, output_geojson, slim_out
     })
     counties = counties.loc[counties.state_name == 'New York']
 
-    print(f'\nMerging NYC counties to one polygon for join with PEESE data')
-    counties['nyc'] = counties.fips.isin(constants.nyc_counties_fips)
-    counties.loc[counties.nyc == True, 'name'] = 'New York City'
-    # Use sum to ensure population columns contain sum of NYC counties
-    nyc = counties.dissolve(by='nyc', aggfunc='sum').reset_index()
-    # Add the same fake fips code to the NYC features to join on using pd.concat
-    nyc['fips'] = constants.nyc_fake_fips
-
-    # Join all NY counties except NYC with the NYC shape and add logical names
-    counties_nyc = pd.concat(
-        [
-            counties.loc[counties.nyc == False],
-            nyc.loc[nyc['nyc'] == True]
-        ]
-    )
-    counties_nyc.loc[counties_nyc.nyc == True, 'name'] = 'New York City'
-    counties_nyc.loc[counties_nyc.nyc == True, 'state_name'] = 'New York'
-    print(' success')
-
-    print(f'\nMerging PEESE data with Census GIS data')
-    county_cases = counties_nyc.merge(cases_df, how='outer', on='fips')
+    print(f'Merge Census data and PEESE data')
+    county_cases = counties.merge(cases_df, how='outer', on='fips')
     print(' success')
 
     print(f'\nCreating field for # Cases normalized by population')

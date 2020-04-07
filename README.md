@@ -7,7 +7,7 @@
 - And an example map of **cases normalized by population** can be viewed here: https://esri-play-peese-data-nmlzd-pop.stackblitz.io/
 
 #### New York Times examples
-- Example map of **cases normalized by population for the entire USA**: 
+- Example map of **cases normalized by population for the entire USA**: https://esri-play-nyt-data-nmlzd-pop.stackblitz.io/
 
 ## Quick Start
 

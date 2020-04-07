@@ -2,10 +2,14 @@
 
 `covid-web` is a project aimed at making geospatial COVID-19 data from repuatable sources freely available to whoever needs it. The aim is to publish the data to the AWS Cloud, where it can be ingested by client-side applications in the GeoJSON format. There is a lot of room to grow here, so feel free to contribute.
 
+#### PEESE examples
 - Example map of cases can be viewed here: https://esri-play-peese-data.stackblitz.io/
 - And an example map of **cases normalized by population** can be viewed here: https://esri-play-peese-data-nmlzd-pop.stackblitz.io/
 
-#### Quick Start
+#### New York Times examples
+- Example map of **cases normalized by population for the entire USA**: 
+
+## Quick Start
 
 The core of this project can be tested by running some simple commands. This has only been tested on Ubuntu 18.04.
 
@@ -26,13 +30,14 @@ pip install -r requirements.txt
 
 If you have never used AWS `boto3` on your machine, you may need to [configure your credentials](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html).
 
-Then there is a python script that will create and publish the data:
+Then there is a python script that will create and publish the 2 data sources:
 
 ```bash
 python source/backend/publish_peese_geojson.py
+python source/backend/publish_nyt_geojson.py
 ```
 
-The script will create a folder: `dist/peese`, which will contain local copies of the data that's uploaded to AWS S3.
+The script will create a dist directory containing: `dist/peese` and `dist/nyt`, which will contain local copies of the data that's uploaded to AWS S3.
 
 To schedule this script in the Linux crontab, you can use something like the following command, which schedules script execution every day at 4 AM in the operating system's time zone:
 
@@ -43,6 +48,8 @@ To schedule this script in the Linux crontab, you can use something like the fol
 ## Data 
 
 Currently the data is available as a public object on AWS S3. The first dataset that is available is from the [PEESE Group](https://www.peese.org/), a lab at Cornell University. They have New York State COVID-19 cases by county available for public access on their [GitHub page](https://github.com/PEESEgroup/PEESE-COVID19). The PEESE cases data is merged with US Census Bureau data, distributed by Esri, which is available on the [Esri site](https://www.arcgis.com/home/item.html?id=a00d6b6149b34ed3b833e10fb72ef47b).
+
+The New York Times is tracking cases by county across the US, and that data is also being made available on the [NYT Github](https://github.com/nytimes/covid-19-data). The NYT data is merged with the US Census Bureau data.
 
 The Census data contains population estimates for 2018. The data is merged with the COVID cases based on the county name and FIPS code. In their final format, there are two separate GeoJSON layers available in two separate formats. The two formats include a raw JSON and a gzip encoded JSON.
 
@@ -56,6 +63,8 @@ The published data is available at two separate URLs, and should be updated dail
 |--------------------------------------|-------------------------------------------------------------------|-------------|
 | ./dist/peese/peese-latest.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson    |  4,700.0 KB |
 | ./dist/peese/peese-latest.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest.geojson.gz |     94.3 KB |
+| ./dist/nyt/nyt-latest.geojson        | https://covid-19-geojson.s3.amazonaws.com/nyt-latest.geojson      | 92,000.0 KB |
+| ./dist/nyt/nyt-latest.geojson.gz     | https://covid-19-geojson.s3.amazonaws.com/nyt-latest.geojson.gz   |  2,900.0 KB |
 
 The data is formatted such that each individual record is a feature in a GeoJSON feature collection. The geometry of the features are MultiPolygon features, and the properties of each feature include the date of the case count, the case count, and all of the census data. This data structure is anything but efficient, and we're open to suggestions.
 
@@ -90,6 +99,8 @@ The published data is available at two separate URLs, and should be updated dail
 |--------------------------------------|-----------------------------------------------------------------------------|------------|
 | ./dist/peese/peese-latest-slim.geojson    | https://covid-19-geojson.s3.amazonaws.com/peese-latest-slim.geojson    | 2,800.0 KB |
 | ./dist/peese/peese-latest-slim.geojson.gz | https://covid-19-geojson.s3.amazonaws.com/peese-latest-slim.geojson.gz |    65.4 KB |
+| ./dist/nyt/nyt-latest-slim.geojson        | https://covid-19-geojson.s3.amazonaws.com/nyt-latest-slim.geojson      | 55,000.0 KB |
+| ./dist/nyt/nyt-latest-slim.geojson.gz     | https://covid-19-geojson.s3.amazonaws.com/nyt-latest-slim.geojson.gz   |  2,000.0 KB |
 
 *NOTE: size of files will increase as more days accumulate. Updated 4.5.2020*
 

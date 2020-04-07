@@ -3,12 +3,12 @@ import os
 
 from cloud_functions import upload_file_to_s3
 import constants
-from make_peese_geojson import merge_peese_with_census, prep_peese_csv
+from make_nyt_geojson import merge_nyt_with_census
 
 
 def main():
-    """This function will be called if this python file is called from the
-    command line. The function manages the transformation of the raw PEESE
+    """This function will be called if this python file is executed from the
+    command line interpreter. The function manages the transformation of the raw NYT
     CSV file from GitHub into a GeoJSON formatted text file. The text files
     are compressed using the gzip algorithm, and the raw GeoJSON and g-zipped
     GeoJSONs are uploaded to AWS S3.
@@ -34,16 +34,16 @@ def main():
         '..',
         '..',
         'dist',
-        'peese',
-        'peese-latest.geojson'
+        'nyt',
+        'nyt-latest.geojson'
     ))
     slim_output_geojson = os.path.abspath(os.path.join(
         os.path.dirname(__file__),
         '..',
         '..',
         'dist',
-        'peese',
-        'peese-latest-slim.geojson'
+        'nyt',
+        'nyt-latest-slim.geojson'
     ))
     # List of files to be uploaded to S3
     s3_upload_files = [output_geojson, slim_output_geojson]
@@ -53,13 +53,8 @@ def main():
             geojson+'.gz' for geojson in s3_upload_files
         ]
 
-    peese_data_frame = prep_peese_csv(
-        constants.peese_csv_url,
-        constants.county_fips
-    )
-
-    merge_peese_with_census(
-        peese_data_frame,
+    merge_nyt_with_census(
+        constants.nyt_csv_url,
         counties_geojson,
         output_geojson,
         slim_output=slim_output_geojson,

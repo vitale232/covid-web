@@ -176,7 +176,7 @@ def main():
     ))
 
     peese_data_frame = prep_peese_csv(
-        constants.csv_url,
+        constants.peese_csv_url,
         constants.county_fips
     )
 

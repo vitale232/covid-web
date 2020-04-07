@@ -1,4 +1,6 @@
 # PEESE data transformation variables
+peese_csv_url = 'https://raw.githubusercontent.com/PEESEgroup/PEESE-COVID19/master/ny%20cases%20by%20county.csv'
+
 county_fips = {              # FIPS codes for NYS counties (state fips+county fips)
     'albany': '36001',       # See US Census for more info
     'allegany': '36003',
@@ -64,18 +66,6 @@ county_fips = {              # FIPS codes for NYS counties (state fips+county fi
     'yates': '36123'
 }
 
-csv_url = 'https://raw.githubusercontent.com/PEESEgroup/PEESE-COVID19/master/ny%20cases%20by%20county.csv'
-
-nyc_counties_fips = [ # FIPS of 5 NYC counties
-    '36005',
-    '36047',
-    '36061',
-    '36081',
-    '36085'
-]
-
-nyc_fake_fips = '-9999' # New York City is not a US Census defined place. Set nodata value for FIPS code
-
 peese_slim_fields = [  # Keep select fields for a "slim" geojson that will result in smaller requests
     'geometry',
     'date',
@@ -90,6 +80,36 @@ peese_slim_fields = [  # Keep select fields for a "slim" geojson that will resul
     'females',
     'pop2010',
 ]
+
+# NYT variables
+nyt_csv_url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
+nyt_slim_fields = [
+    'fips',
+    'county',
+    'population',
+    'males',
+    'females',
+    'date',
+    'cases',
+    'new_cases',
+    'deaths',
+    'new_deaths',
+    'state',
+    'geometry',
+    'cases_per_100k',
+]
+
+# Shared variables
+nyc_counties_fips = [ # FIPS of 5 NYC counties
+    '36005',
+    '36047',
+    '36061',
+    '36081',
+    '36085'
+]
+
+nyc_fake_fips = '-9999' # New York City is not a US Census defined place. Set nodata value for FIPS code
+
 
 # AWS variables
 s3_bucket = 'covid-19-geojson'          # the bucket to which the geojson will be published

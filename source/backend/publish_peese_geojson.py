@@ -1,7 +1,9 @@
 from datetime import datetime
+import json
 import os
 
 from cloud_functions import upload_file_to_s3
+from colormap import get_rgbs
 import constants
 from make_peese_geojson import merge_peese_with_census, prep_peese_csv
 
@@ -22,6 +24,7 @@ def main():
     print(f'Start time     : {start_time}')
 
     gzip_output = True
+    color_bins = 5
     counties_geojson = os.path.abspath(os.path.join(
         os.path.dirname(__file__),
         '..',
@@ -45,12 +48,24 @@ def main():
         'peese',
         'peese-latest-slim.geojson'
     ))
+    colormap_json = os.path.abspath(os.path.join(
+        os.path.dirname(__file__),
+        '..',
+        '..',
+        'dist',
+        'peese',
+        'peese-latest-colormap.json'
+    ))
     # List of files to be uploaded to S3
-    s3_upload_files = [output_geojson, slim_output_geojson]
+    s3_upload_files = [
+        output_geojson,
+        slim_output_geojson,
+        colormap_json,
+    ]
     if gzip_output:
         # Add the gzip version if appropriate
         s3_upload_files += [
-            geojson+'.gz' for geojson in s3_upload_files
+            geojson+'.gz' for geojson in s3_upload_files if 'colormap' not in geojson
         ]
 
     peese_data_frame = prep_peese_csv(
@@ -65,6 +80,23 @@ def main():
         slim_output=slim_output_geojson,
         gzip=gzip_output
     )
+
+    cases_rgbs = get_rgbs(
+        peese_data_frame.cases.values.tolist(),
+        color_bins,
+        mode='equalinterval'
+    )
+
+    if len(cases_rgbs['cuts']['rgb_colors']) != color_bins:
+        cases_rgbs = get_rgbs(
+            peese_data_frame.cases.values.tolist(),
+            color_bins,
+            mode='equalcount'
+        )
+
+    print(f'\nWriting colormap PEESE JSON:\n {colormap_json}')
+    with open(colormap_json, 'w') as colormap_file:
+        json.dump(cases_rgbs, colormap_file)
 
     for upload_geojson_file in s3_upload_files:
         # Choose S3 Metadata based on the upload file extension

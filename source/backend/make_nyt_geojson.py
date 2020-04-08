@@ -84,4 +84,4 @@ def merge_nyt_with_census(csv_url, counties_geojson, output_geojson, slim_output
                 slim_output+'.gz'
             )
 
-    return output_geojson
+    return county_cases

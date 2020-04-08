@@ -8,6 +8,8 @@
         "broome",
         "cattaraugus",
         "chenango",
+        "cividis",
+        "cmap",
         "covid",
         "data",
         "dataset",
@@ -17,6 +19,7 @@
         "fips",
         "geo",
         "geospatial",
+        "get",
         "herkimer",
         "iloc",
         "isin",
@@ -26,10 +29,15 @@
         "objectid",
         "otsego",
         "peese",
+        "pyplot",
+        "qcut",
+        "quantile",
         "rensselaer",
         "repuatable",
+        "rgbs",
         "schoharie",
         "strftime",
-        "tioga"
+        "tioga",
+        "viridis"
     ]
 }

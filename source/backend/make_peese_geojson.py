@@ -104,7 +104,7 @@ def merge_peese_with_census(cases_df, counties_geojson, output_geojson, slim_out
                 slim_output+'.gz'
             )
 
-    return output_geojson
+    return county_cases
 
 def gzip_geojson(input_filepath, output_filepath):
     """Compress a file using gzip algorithm

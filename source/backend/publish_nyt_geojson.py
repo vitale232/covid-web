@@ -76,17 +76,43 @@ def main():
         gzip=gzip_output
     )
 
+    print('\nAttempting to calculate equal count color bin')
     cases_rgbs = get_rgbs(
         nyt_data_frame.cases_per_100k.values.tolist(),
         color_bins,
-        mode='equalinterval'
+        mode='equalcount'
     )
 
     if len(cases_rgbs['cuts']['rgb_colors']) != color_bins:
+        try_color_bins = [
+            bin_count+i for i, bin_count in enumerate(range(1, color_bins+1))
+        ]
+        for equal_count_bins in try_color_bins:
+            current_bin_count = len(cases_rgbs['cuts']['rgb_colors'])
+            print(f' Desired bins: {color_bins} | Current bins: {current_bin_count}')
+            cases_rgbs = get_rgbs(
+                nyt_data_frame.cases_per_100k.values.tolist(),
+                equal_count_bins,
+                mode='equalcount'
+            )
+            if len(cases_rgbs['cuts']['rgb_colors']) == color_bins:
+                current_bin_count = len(cases_rgbs['cuts']['rgb_colors']) 
+                print(f' Desired bins: {color_bins} | Current bins: {current_bin_count}')
+                print('  Equal Count Success!')
+                need_equal_interval = False
+                break
+            else:
+                need_equal_interval = True
+    else:
+        print(' success')
+        need_equal_interval = False
+
+    if need_equal_interval:
+        print('Falling back to equal interval color bin')
         cases_rgbs = get_rgbs(
-            nyt_data_frame.cases.values.tolist(),
+            nyt_data_frame.cases_per_100k.values.tolist(),
             color_bins,
-            mode='equalcount'
+            mode='equalinterval'
         )
 
     print(f'\nWriting NYT colormap JSON:\n {colormap_json}')

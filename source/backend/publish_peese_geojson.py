@@ -89,7 +89,7 @@ def main():
 
     if len(cases_rgbs['cuts']['rgb_colors']) != color_bins:
         cases_rgbs = get_rgbs(
-            peese_data_frame.cases.values.tolist(),
+            peese_data_frame.cases_per_100k.values.tolist(),
             color_bins,
             mode='equalcount'
         )

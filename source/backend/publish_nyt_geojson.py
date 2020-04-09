@@ -77,7 +77,7 @@ def main():
     )
 
     cases_rgbs = get_rgbs(
-        nyt_data_frame.cases.values.tolist(),
+        nyt_data_frame.cases_per_100k.values.tolist(),
         color_bins,
         mode='equalinterval'
     )

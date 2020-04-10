@@ -24,6 +24,7 @@ def main():
     print(f'Start time     : {start_time}')
 
     gzip_output = True
+    colormap = 'magma'
     color_bins = 5
     counties_geojson = os.path.abspath(os.path.join(
         os.path.dirname(__file__),
@@ -81,11 +82,12 @@ def main():
         gzip=gzip_output
     )
 
-    print('\nAttempting to calculate equal count color bin')
+    print(f'\nAttempting to calculate {color_bins} equal count color bin')
     cases_rgbs = get_rgbs(
         peese_merged_df.cases_per_100k.values.tolist(),
         color_bins,
-        mode='equalcount'
+        mode='equalcount',
+        colormap=colormap
     )
 
     if len(cases_rgbs['cuts']['rgb_colors']) != color_bins:
@@ -98,7 +100,8 @@ def main():
             cases_rgbs = get_rgbs(
                 peese_merged_df.cases_per_100k.values.tolist(),
                 equal_count_bins,
-                mode='equalcount'
+                mode='equalcount',
+                colormap=colormap
             )
             if len(cases_rgbs['cuts']['rgb_colors']) == color_bins:
                 current_bin_count = len(cases_rgbs['cuts']['rgb_colors']) 
@@ -117,7 +120,8 @@ def main():
         cases_rgbs = get_rgbs(
             peese_merged_df.cases_per_100k.values.tolist(),
             color_bins,
-            mode='equalinterval'
+            mode='equalinterval',
+            colormap=colormap
         )
 
     print(f'\nWriting colormap PEESE JSON:\n {colormap_json}')

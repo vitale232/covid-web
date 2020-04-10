@@ -24,7 +24,8 @@ def main():
     print(f'Start time     : {start_time}')
 
     gzip_output = True
-    color_bins = 5
+    colormap = 'plasma'
+    color_bins = 10
     counties_geojson = os.path.abspath(os.path.join(
         os.path.dirname(__file__),
         '..',
@@ -76,11 +77,12 @@ def main():
         gzip=gzip_output
     )
 
-    print('\nAttempting to calculate equal count color bin')
+    print(f'\nAttempting to calculate {color_bins} equal count color bin of {colormap}')
     cases_rgbs = get_rgbs(
         nyt_data_frame.cases_per_100k.values.tolist(),
         color_bins,
-        mode='equalcount'
+        mode='equalcount',
+        colormap=colormap
     )
 
     if len(cases_rgbs['cuts']['rgb_colors']) != color_bins:
@@ -93,7 +95,8 @@ def main():
             cases_rgbs = get_rgbs(
                 nyt_data_frame.cases_per_100k.values.tolist(),
                 equal_count_bins,
-                mode='equalcount'
+                mode='equalcount',
+                colormap=colormap
             )
             if len(cases_rgbs['cuts']['rgb_colors']) == color_bins:
                 current_bin_count = len(cases_rgbs['cuts']['rgb_colors']) 
@@ -112,7 +115,8 @@ def main():
         cases_rgbs = get_rgbs(
             nyt_data_frame.cases_per_100k.values.tolist(),
             color_bins,
-            mode='equalinterval'
+            mode='equalinterval',
+            colormap=colormap
         )
 
     print(f'\nWriting NYT colormap JSON:\n {colormap_json}')
@@ -121,6 +125,9 @@ def main():
 
     for upload_geojson_file in s3_upload_files:
         # Choose S3 Metadata based on the upload file extension
+        if os.path.basename(upload_geojson_file) == os.path.basename(output_geojson):
+            print('  SKIPPING!')
+            continue
         if upload_geojson_file.split('.')[-1] == 'gz':
             extra_args = constants.gzip_extra_args
         else:

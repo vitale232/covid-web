@@ -27,11 +27,11 @@ def main():
     utils_logs_dir = os.path.join(logs_dir, 'utils')
 
     log_files = [
-        os.path.join(nyt_logs_dir, file_) for file_ in os.listdir(nyt_logs_dir)
+        os.path.join(nyt_logs_dir, file_) for file_ in sorted(os.listdir(nyt_logs_dir))
     ] + [
-        os.path.join(peese_logs_dir, file_) for file_ in os.listdir(peese_logs_dir)
+        os.path.join(peese_logs_dir, file_) for file_ in sorted(os.listdir(peese_logs_dir))
     ] + [
-        os.path.join(utils_logs_dir, file_) for file_ in os.listdir(utils_logs_dir)
+        os.path.join(utils_logs_dir, file_) for file_ in sorted(os.listdir(utils_logs_dir))
     ]
 
     print(f'\nScanning log dir for files older than {delete_delta}:\n Log Dir : {nyt_logs_dir}')

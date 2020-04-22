@@ -23,7 +23,7 @@ def merge_nyt_with_census(csv_url, counties_geojson, output_geojson, slim_output
     cases_df = cases_df.assign(new_cases=cases_df.cases.diff().fillna(0).astype(int))
     cases_df = cases_df.assign(new_deaths=cases_df.deaths.diff().fillna(0).astype(int))
     cases_df = cases_df.reset_index()
-    cases_df.loc[cases_df.new_cases <0, 'new_cases'] = 0
+    cases_df.loc[cases_df.new_cases <  0, 'new_cases'] = 0
 
     print(f'\nReading in the counties GeoJSON:\n {counties_geojson}')
     counties = geopandas.read_file(counties_geojson)

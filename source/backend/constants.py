@@ -97,6 +97,7 @@ nyt_slim_fields = [
     'state',
     'geometry',
     'cases_per_100k',
+    'deaths_per_100k',
 ]
 
 # Shared variables

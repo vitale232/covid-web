@@ -8,6 +8,7 @@
 
 #### New York Times examples
 - Example map of **cases normalized by population for the entire USA**: https://esri-play-nyt-data-nmlzd-pop.stackblitz.io/
+- Example map of **deaths normalized by population for the entire USA**: https://esri-play-nyt-data-nmlzd-pop-deaths.stackblitz.io/
 
 ## Quick Start
 
